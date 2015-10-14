@@ -14,25 +14,38 @@ public class Request {
 	}
 }
 
+public enum ElevatorStatus {
+	Idel(0), MovingUp(1),MovingDown(-1);
+	
+	private int value;
+
+	private ElevatorStatus(int val) {
+		value = val;
+	}
+	public int getValue() {
+		return value;
+	}
+}
+
 public class Elevator {
 	private static final int CAPACITY;
 	private static instance = new Elevator();
-	private int moveStatus;
+	private ElevatorStatus moveStatus;
 	private int currentFloor;
 	private boolean isDoorCloosed;
 
 	public static Elevator getInstance() {
 		return instance;
 	}
-	public moveUp();
-	public moveDown();
+	public void moveUp();
+	public void moveDown();
 	public boolean checkCapacity();
 	public boolean closeDoor();
 	public boolean openDoor();
-	public int getCurrentStatus();
+	public ElevatorStatus getCurrentStatus();
 	public int getCurrentFloor();
 	public boolean getIsDoorCloosed();
-	public moveFollowRequest(Request req);
+	public void moveFollowRequest(Request req);
 }
 
 public class Controller implements Runnable{
@@ -42,7 +55,7 @@ public class Controller implements Runnable{
 	public Controller getInstance() {
 		return instance;
 	}
-	public addRequest(Request req) {
+	public void addRequest(Request req) {
 		if (!que.contains(req)) {
 			que.add(req);
 		}
@@ -53,13 +66,13 @@ public class Controller implements Runnable{
 		}
 		return que.poll();
 	}
-	public process() {
+	public void process() {
 		Request req = getNextRequest();
 		if (req != null) {
 			Elevator.getInstance().moveFollowRequest(req);
 		}
 	}
-	public run() {
+	public void run() {
 		while(True) {
 			process();
 		}
@@ -76,7 +89,7 @@ public class User {
 		goUp = _goUp;
 	}
 
-	public sentRequest() {
+	public void sentRequest() {
 		Request req = new Request(currentFloor, goUp);
 		Controller.getInstance().addRequest(req);
 	}
