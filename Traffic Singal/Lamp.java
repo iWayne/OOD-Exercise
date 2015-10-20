@@ -6,8 +6,9 @@
  * e2s,w2n
  * s2e,n2w(Always Green)
  * e2n,w2s(Always Green)
+ * @see java.lang.Enum above JDK 1.5
  */
-/* Enumeration Type from JDK1.5 in package java.lang.enum */
+
 public enum Lamp {
     S2N(false,"N2S","S2W"),S2W(false,"N2E","E2W"),E2W(false,"W2E","E2S"),E2S(false,"W2N","S2N"),
     N2S(false,null,null),N2E(false,null,null),W2E(false,null,null),W2N(false,null,null),

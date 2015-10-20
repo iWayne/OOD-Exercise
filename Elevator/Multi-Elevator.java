@@ -1,10 +1,16 @@
 /**
-* Multi-Elevator System
-* 6 elevators and a controller
-* Request Button contains floor number and direction
-**/
+ * Elevator OOD: Multi-Elevator OOD
+ * 6 elevators and a controller.
+ * Each floor has two request buttons for each direction.
+ * @author  Wayne Shan
+ * @version 1.0, Oct. 2015
+ * Note that I miss the range of the floors
+ */
 
-
+/**
+*  Request Class
+*  Requests will be created by users and sent to the elevator controller
+*/
 public class Request {
 	private int reqFloor;
 	private boolean goUp;
@@ -21,6 +27,11 @@ public class Request {
 	}
 }
 
+/**
+* ElevatorStatus Enumeration
+* List the possible status of an Elevator
+* @see java.lang.Enum above JDK 1.5
+*/
 public enum ElevatorStatus {
 	Idel(0), MovingUp(1),MovingDown(-1);
 	
@@ -34,11 +45,17 @@ public enum ElevatorStatus {
 	}
 }
 
+/**
+* Elevator Class
+* The only difference between One-Elevator OOD is we cannot set the class as a singleton
+*/
 public class Elevator {
-	private static final int CAPACITY = 1000;
+	//The maximun weight (1.5 ton) that the elevator allows
+	private static final int CAPACITY = 1500;
 	private ElevatorStatus moveStatus;
 	private int currentFloor;
 	private boolean isDoorCloosed;
+	//Use id to identify each elevator
 	private int id;
 
 	public Elevator(int _id) {
@@ -55,9 +72,19 @@ public class Elevator {
 	public void moveFollowRequest(Request req);
 }
 
+/**
+* Controller Class
+* It is used to sort the requests and control the elevator<br>
+* Because there is only one controller. We create it as a Singleton.
+* Also to make the controller runs in different thread, we implement Runnable interface.
+* @see java.lang.Runnable
+*/
 public class Controller implements Runnable{
+	//Use an array of List to store the requests, Other data structure is also possible
 	private ArrayList<List<Request>> ques = new ArrayList<List<Request>>();
+	//Total 6 elevators
 	private Elevator[] eles = new Elevator[6];
+	//The instance make Controller works as a singleton
 	private static instance = new Controller();
 
 	private Controller() {
@@ -94,6 +121,11 @@ public class Controller implements Runnable{
 	}
 }
 
+/**
+* User Class
+* The definition of a user<br>
+* Users will form the requests and send the requests to the Elevator Controller
+*/
 public class User {
 	private String userName;
 	private int currentFloor;
